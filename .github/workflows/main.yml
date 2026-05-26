@@ -28,12 +28,9 @@ jobs:
       - name: Build with Maven
         run: mvn clean package -DskipTests
 
-      # 4. Inicia sesion en Docker Hub
+      # 4. Inicia sesión en Docker Hub
       - name: Log in to Docker Hub
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+        run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
 
       # 5. Construye y sube la imagen a Docker Hub
       - name: Build and push Docker image
